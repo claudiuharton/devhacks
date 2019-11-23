@@ -40,10 +40,18 @@ const routes = [{
   },
   {
     path: "/admin",
-    component: () => import("layouts/DisplayLayout.vue"),
+    component: () => import("layouts/AdminLayout.vue"),
     children: [{
       path: "",
       component: () => import("pages/AdminPage.vue"),
+    }]
+  },
+  {
+    path: "/test",
+    component: () => import("layouts/DisplayLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/TestChart.vue"),
     }]
   },
 
