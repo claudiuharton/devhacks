@@ -7,14 +7,6 @@ module.exports = (sequelize, DataTypes) => {
     },
     name: DataTypes.STRING,
     status: DataTypes.INTEGER, // 0(not on paycheck), 1(at paycheck), 2(will be at paycheck)
-    cashPointNumber: DataTypes.INTEGER,
-    arrivedAt: {
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue("arrivedAt")).format(
-          "DD/MM/YY h:mm:ss"
-        );
-      }
-    }
+    cashPointNumber: DataTypes.INTEGER
   });
 };
