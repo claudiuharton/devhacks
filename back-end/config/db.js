@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 
-const sequelize = new Sequelize("localhost" , "root" , "" , {
+const sequelize = new Sequelize("devHacks" , "root" , "" , {
     dialect: "mysql",
     host: "localhost",
     define:{
