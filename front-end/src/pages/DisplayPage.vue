@@ -29,7 +29,7 @@ export default {
   data() {
     return {
       something: "001",
-      casa: 0
+      casa: Math.floor(Math.random() * 31)
     };
   }
 };
