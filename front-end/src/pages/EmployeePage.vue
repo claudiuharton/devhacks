@@ -1,6 +1,12 @@
 <template>
-  <q-page class="flex flex-center">
-    <q-btn round icon="check" class="bg-green text-grey-1 q-ma-xl"></q-btn>
+  <q-page class="flex flex-center column">
+    <div class="text-center flex-center">
+      <h4
+        class="line-height-xl"
+      >In aproximately {{randomMinutes}} minutes you have to open cashier #{{randomCashier}}</h4>
+    </div>
+
+    <q-btn push round icon="check" class="bg-green text-grey-1" size="30px"></q-btn>
     <!-- <q-btn
       align="around"
       class="btn-fixed-width"
@@ -16,6 +22,20 @@
 
 <script>
 export default {
-  name: "LoginPage"
+  name: "EmployeePage",
+  data() {
+    return {
+      randomMinutes: Math.floor(Math.random() * 16),
+      randomCashier: Math.floor(Math.random() * 31)
+    };
+  }
 };
 </script>
+
+<style >
+@import url("https://fonts.googleapis.com/css?family=Montserrat&display=swap");
+
+h4 {
+  font-family: "Montserrat", sans-serif;
+}
+</style>

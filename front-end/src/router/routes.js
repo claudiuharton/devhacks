@@ -37,7 +37,16 @@ const routes = [{
       path: "",
       component: () => import("pages/EmployeePage.vue"),
     }]
-  }
+  },
+  {
+    path: "/admin",
+    component: () => import("layouts/DisplayLayout.vue"),
+    children: [{
+      path: "",
+      component: () => import("pages/AdminPage.vue"),
+    }]
+  },
+
 ];
 
 // Always leave this as last one
