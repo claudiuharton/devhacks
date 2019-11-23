@@ -7,7 +7,7 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         autoIncrement: true
       },
-
+      name: DataTypes.STRING,
       //F1
       timeSpentShopping: DataTypes.BIGINT,
       //F2
