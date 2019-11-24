@@ -13,8 +13,10 @@ module.exports = (sequelize, DataTypes) => {
       //F2
       timeSpentAtQueue: DataTypes.BIGINT,
       //F3
-      timeSpentAtCashier: DataTypes.BIGINT
+      timeSpentAtCashier: DataTypes.BIGINT,
+      counter: DataTypes.INTEGER
     },
+
     {
       tableName: "customer"
     },
