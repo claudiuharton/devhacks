@@ -63,6 +63,17 @@ const controller = {
         where: { id: req.body.id }
       });
       let timeSpentShopping = entry.arrivedAtCheck - entry.arrivedAt;
+      let timeSpentAtQueue = entry.arrivedAtPay - entry.arrivedAtCheck;
+      let timeSpentAtCashier = entry.leftAt - entry.arrivedAtPay;
+      if (!customer.timeSpentShopping) {
+        await customer.update({
+          ...customer,
+          timeSpentShopping: timeSpentShopping,
+          timeSpentAtQueue: timeSpentAtQueue,
+          timeSpentAtCashier: timeSpentAtCashier
+        });
+        console.log("Updated customer info");
+      }
       console.log(timeSpentShopping);
       // let timeSpentShopping =
     } catch (e) {
