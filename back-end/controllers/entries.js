@@ -3,15 +3,73 @@ const { Entry, Customer } = require("../models");
 const controller = {
   enterStore: async (req, res) => {
     try {
+      const currentDate = new Date();
       const customer = await Customer.findOne({
         where: { id: req.body.id },
         raw: true
       });
 
       const entry = await Entry.create({
-        arrivedAt: new Date(),
+        arrivedAt: currentDate,
         customerId: customer.id
       });
+
+      const cust = {
+        id: customer.id,
+        //F1
+        timeSpentShopping: customer.timeSpentShopping,
+        //F2
+        timeSpentAtQueue: customer.timeSpentAtQueue,
+        //F3
+        timeSpentAtCashier: customer.timeSpentAtCashier,
+        //T1
+        arrivedAt: entry.arrivedAt,
+        //T2
+        arrivedAtCheck: entry.arrivedAtCheck,
+        //T3
+        arrivedAtPay: entry.arrivedAtPay,
+        //T4
+        leftAt: entry.leftAt,
+        //T2A
+        arrivedAtCheckAprox: entry.arrivedAt + customer.timeSpentShopping,
+
+        counter: 1
+      };
+
+      req.app.locals.customersInShop.push(cust);
+      req.app.locals.customersInShop.sort(
+        (a, b) => a.arrivedAtCheckAprox - b.arrivedAtCheckAprox
+      );
+
+      for (let i = 0; i < req.app.locals.customersInShop.length; i++) {
+        let counter = req.app.locals.cashPoints.reduce((acc, curr) => {
+          if (
+            curr.status &&
+            req.app.locals.customersInShop[i].arrivedAtCheckAprox -
+              currentDate <
+              curr.customers.reduce(
+                (acc2, curr2) => curr2.timeSpentAtCashier + acc2,
+                0
+              )
+          )
+            return acc + 1;
+          else return acc;
+        }, 0);
+        for (let j = 0; j < i; j++) {
+          if (i != j) {
+            if (
+              req.app.locals.customersInShop[i].arrivedAtCheckAprox -
+                currentDate >
+              req.app.locals.customersInShop[j].timeSpentAtCashier
+            ) {
+              counter++;
+            }
+          }
+          req.app.locals.customersInShop[i].counter = counter;
+        }
+      }
+
+      //   req.app.locals.customersInShop;
 
       res.status(201).send({ message: "Customer arrived" });
     } catch (e) {
@@ -22,15 +80,44 @@ const controller = {
 
   checkpointArrival: async (req, res) => {
     try {
+      const currentDate = new Date();
       const entry = await Entry.findOne({
         where: { customerId: req.body.id },
-        order: [["id", "DESC"]]
+        order: ["id", "DESC"]
       });
-      console.log(entry);
-      await entry.update({ ...entry, arrivedAtCheck: new Date() });
+      await entry.update({ ...entry, arrivedAtCheck: currentDate });
+
+      const customer = req.app.locals.customersInShop.splice(
+        req.app.locals.customersInShop.find(el => el.id === req.body.id),
+        1
+      );
+
+      let indexOfBestCashPointValue;
+      const bestCashPointValue = req.app.locals.cashPoints.reduce(
+        (acc, curr, index) => {
+          if (curr.status) {
+            const total = curr.customers.reduce(
+              (acc2, curr2) => curr2.timeSpentAtCashier + acc2,
+              0
+            );
+
+            if (acc < total) {
+              return acc;
+            } else {
+              indexOfBestCashPointValue = index;
+              return total;
+            }
+          }
+        }
+      );
+
+      req.app.locals.cashPoints[indexOfBestCashPointValue].customers.push(
+        customer
+      );
+
       res
         .status(200)
-        .send({ message: `Customer checkpoint arrived at: ${new Date()}` });
+        .send({ message: `Customer checkpoint arrived at: ${currentDate}` });
     } catch (e) {
       console.error(e);
       res.status(500).send({ message: "Server Error" });
@@ -39,15 +126,15 @@ const controller = {
 
   cashPointArrival: async (req, res) => {
     try {
+      const currentDate = new Date();
       const entry = await Entry.findOne({
         where: { customerId: req.body.id },
-        order: [["id", "DESC"]]
+        order: ["id", "DESC"]
       });
-      console.log(entry);
-      await entry.update({ ...entry, arrivedAtPay: new Date() });
+      await entry.update({ ...entry, arrivedAtPay: currentDate });
       res
         .status(200)
-        .send({ message: `Customer cashpoint arrived at: ${new Date()}` });
+        .send({ message: `Customer cashpoint arrived at: ${currentDate}` });
     } catch (e) {
       console.error(e);
       res.status(500).send({ message: "Server Error" });
@@ -56,12 +143,25 @@ const controller = {
 
   departure: async (req, res) => {
     try {
+      const currentDate = new Date();
       const entry = await Entry.findOne({
         where: { customerId: req.body.id },
         order: [["id", "DESC"]]
       });
-      await entry.update({ ...entry, leftAt: new Date() });
-      res.status(200).send({ message: `Customer left at: ${new Date()}` });
+      await entry.update({ ...entry, leftAt: currentDate });
+
+      let indexOfCustomer;
+
+      let indexOfTargetedCashPoint = req.app.locals.cashPoints.findIndex(it => {
+        indexOfCustomer = it.customers.findIndex(it2 => it2.id === req.body.id);
+        return indexOfCustomer;
+      });
+
+      req.app.locals.cashPoints[indexOfTargetedCashPoint].customers.splice(
+        indexOfCustomer,
+        1
+      );
+
       const customer = await Customer.findOne({
         where: { id: req.body.id }
       });
@@ -76,7 +176,6 @@ const controller = {
           timeSpentAtCashier: timeSpentAtCashier,
           counter: 1
         });
-        console.log("Updated customer info");
       } else {
         let counter = customer.counter;
         await customer.update({
@@ -98,7 +197,7 @@ const controller = {
         });
         console.log("------------HERE: " + customer.timeSpentShopping);
       }
-      console.log(timeSpentShopping);
+      res.status(200).send({ message: `Customer left at: ${currentDate}` });
       // let timeSpentShopping =
     } catch (e) {
       console.log(e);

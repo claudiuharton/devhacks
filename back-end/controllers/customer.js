@@ -5,7 +5,11 @@ const router = express.Router();
 const customerController = {
   addCustomer: async (req, res) => {
     const customer = {
-      name: req.body.name
+      name: req.body.name,
+      timeSpentShopping: 0,
+      timeSpentAtQueue: 0,
+      timeSpentAtCashier: 0,
+      counter: 0
     };
 
     try {
