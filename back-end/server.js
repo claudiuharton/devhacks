@@ -5,14 +5,14 @@ const cors = require("cors");
 const websockets = require("./controllers/websockets");
 let port = 8080;
 
-const shop = {
+const app = express();
+
+app.locals = {
   cashPoints: [],
   employee: [],
   customersAtCashPoints: [],
   customersInShop: []
 };
-
-const app = express();
 
 const configure = app => {
   app.use(cors());
@@ -35,8 +35,20 @@ let wss = new WSServer({
 
 // Also mount the app here
 server.on("request", app);
+const { Employee } = require("./models");
 
-wss.on("connection", websockets);
+wss.on("connection", ws => {
+  ws.on("message", async function incoming(message) {
+    const employees = await Employee.findAll({ raw: true });
+
+    ws.send(
+      JSON.stringify({
+        employees,
+        some: app.locals.cashPoints
+      })
+    );
+  });
+});
 
 server.listen(port, function() {
   console.log(`http/ws server listening on ${port}`);
