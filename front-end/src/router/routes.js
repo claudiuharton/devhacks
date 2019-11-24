@@ -3,20 +3,12 @@ const routes = [{
     component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
-      component: () => import("pages/MainPage.vue")
-    }]
-  },
-  {
-    path: "/login",
-    component: () => import("layouts/AuthLayout.vue"),
-    children: [{
-      path: "",
-      component: () => import("pages/LoginPage.vue")
+      component: () => import("pages/AdminPage.vue")
     }]
   },
   {
     path: "/display",
-    component: () => import("layouts/DisplayLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
       component: () => import("pages/DisplayPage.vue")
@@ -24,7 +16,7 @@ const routes = [{
   },
   {
     path: "/input",
-    component: () => import("layouts/InputLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
       component: () => import("pages/InputPage.vue")
@@ -32,7 +24,7 @@ const routes = [{
   },
   {
     path: "/employee",
-    component: () => import("layouts/EmployeeLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
       component: () => import("pages/EmployeePage.vue"),
@@ -40,7 +32,7 @@ const routes = [{
   },
   {
     path: "/admin",
-    component: () => import("layouts/AdminLayout.vue"),
+    component: () => import("layouts/MainLayout.vue"),
     children: [{
       path: "",
       component: () => import("pages/AdminPage.vue"),

@@ -1,5 +1,10 @@
 <template>
   <q-page>
+    <q-header elevated>
+      <q-toolbar>
+        <q-toolbar-title class="q-ml-lg font-primary2 no-shadow">Admin Page</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
     <div class="row">
       <div class="col-xs-12 col-sm-6">
         <q-tabs v-model="tab" class="bg-red-6 text-white">

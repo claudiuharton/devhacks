@@ -1,17 +1,5 @@
 <template>
-  <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <!-- <q-btn flat dense round @click="leftDrawerOpen = !leftDrawerOpen" aria-label="Menu">
-          <q-icon name="menu" />
-        </q-btn>-->
-
-        <q-toolbar-title>Quasar App</q-toolbar-title>
-
-        <q-btn color="white" text-color="black" label="Logout" @click="$router.push('/login')" />
-      </q-toolbar>
-    </q-header>
-
+  <q-layout view="lHr lpr lFr">
     <q-page-container>
       <router-view />
     </q-page-container>
@@ -22,12 +10,7 @@
 import { openURL } from "quasar";
 
 export default {
-  name: "MainLayout",
-  data() {
-    return {
-      // leftDrawerOpen: this.$q.platform.is.desktop
-    };
-  },
+  name: "DisplayLayout",
   methods: {
     openURL
   }

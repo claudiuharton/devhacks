@@ -1,5 +1,10 @@
 <template>
   <q-page class="flex flex-center column">
+    <q-header elevated>
+      <q-toolbar>
+        <q-toolbar-title class="q-ml-lg font-primary2 no-shadow">Employee Page</q-toolbar-title>
+      </q-toolbar>
+    </q-header>
     <div class="text-center flex-center">
       <h4
         class="line-height-xl"
