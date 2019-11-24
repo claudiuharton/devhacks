@@ -6,42 +6,14 @@ module.exports = (sequelize, DataTypes) => {
       autoIncrement: true
     },
 
-    arrivedAt: {
-      //T1
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue("arrivedAt")).format(
-          "DD/MM/YYYY h:mm:ss"
-        );
-      }
-    },
+    //T1
+    arrivedAt: DataTypes.DATE,
 
-    arrivedAtCheck: {
-      //T2
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue("arrivedAtCheck")).format(
-          "DD/MM/YYYY h:mm:ss"
-        );
-      }
-    },
-
-    arrivedAtPay: {
-      //T3
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue("arrivedAtPay")).format(
-          "DD/MM/YYYY h:mm:ss"
-        );
-      }
-    },
-
-    leftAt: {
-      //T4
-      type: DataTypes.DATE,
-      get() {
-        return moment(this.getDataValue("leftAt")).format("DD/MM/YYYY h:mm:ss");
-      }
-    }
+    //T2
+    arrivedAtCheck: DataTypes.DATE,
+    //T3
+    arrivedAtPay: DataTypes.DATE,
+    //T4
+    leftAt: DataTypes.DATE
   });
 };

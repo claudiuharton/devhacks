@@ -53,12 +53,29 @@ const controller = {
 
   departure: async (req, res) => {
     try {
-      const entry = await await Entry.findOne({
+      const entry = await Entry.findOne({
         where: { customerId: req.body.id },
         order: [["id", "DESC"]]
       });
       await entry.update({ ...entry, leftAt: new Date() });
       res.status(200).send({ message: `Customer left at: ${new Date()}` });
+      const customer = await Customer.findOne({
+        where: { id: req.body.id }
+      });
+      let timeSpentShopping = entry.arrivedAtCheck - entry.arrivedAt;
+      let timeSpentAtQueue = entry.arrivedAtPay - entry.arrivedAtCheck;
+      let timeSpentAtCashier = entry.leftAt - entry.arrivedAtPay;
+      if (!customer.timeSpentShopping) {
+        await customer.update({
+          ...customer,
+          timeSpentShopping: timeSpentShopping,
+          timeSpentAtQueue: timeSpentAtQueue,
+          timeSpentAtCashier: timeSpentAtCashier
+        });
+        console.log("Updated customer info");
+      }
+      console.log(timeSpentShopping);
+      // let timeSpentShopping =
     } catch (e) {
       console.log(e);
       res.status(500).send({ message: "Server error" });
