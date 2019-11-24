@@ -2,14 +2,15 @@ const express = require("express");
 const bodyParser = require("body-parser");
 const router = require("./routes");
 const cors = require("cors");
-const websockets = require("./controllers/websockets");
+let WSServer = require("ws").Server;
+let server = require("http").createServer();
 let port = 8080;
 
 const app = express();
 
 app.locals = {
   cashPoints: [],
-  employee: [],
+  employees: [],
   customersAtCashPoints: [],
   customersInShop: []
 };
@@ -25,9 +26,6 @@ const configure = app => {
 
 configure(app);
 
-let WSServer = require("ws").Server;
-let server = require("http").createServer();
-
 // Create web socket server on top of a regular http server
 let wss = new WSServer({
   server: server
@@ -35,16 +33,15 @@ let wss = new WSServer({
 
 // Also mount the app here
 server.on("request", app);
-const { Employee } = require("./models");
 
 wss.on("connection", ws => {
   ws.on("message", async function incoming(message) {
-    const employees = await Employee.findAll({ raw: true });
-
     ws.send(
       JSON.stringify({
-        employees,
-        some: app.locals.cashPoints
+        employees: app.locals.employees,
+        cashPoints: app.locals.cashPoints,
+        customersInShop: app.locals.customersInShop,
+        customersAtCashPoints: app.locals.customersAtCashPoints
       })
     );
   });
