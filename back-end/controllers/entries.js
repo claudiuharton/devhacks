@@ -62,17 +62,38 @@ const controller = {
       const customer = await Customer.findOne({
         where: { id: req.body.id }
       });
-      let timeSpentShopping = entry.arrivedAtCheck - entry.arrivedAt;
-      let timeSpentAtQueue = entry.arrivedAtPay - entry.arrivedAtCheck;
-      let timeSpentAtCashier = entry.leftAt - entry.arrivedAtPay;
+      let timeSpentShopping = entry.arrivedAtCheck - entry.arrivedAt; //f1
+      let timeSpentAtQueue = entry.arrivedAtPay - entry.arrivedAtCheck; //f2
+      let timeSpentAtCashier = entry.leftAt - entry.arrivedAtPay; //f3
       if (!customer.timeSpentShopping) {
         await customer.update({
           ...customer,
           timeSpentShopping: timeSpentShopping,
           timeSpentAtQueue: timeSpentAtQueue,
-          timeSpentAtCashier: timeSpentAtCashier
+          timeSpentAtCashier: timeSpentAtCashier,
+          counter: 1
         });
         console.log("Updated customer info");
+      } else {
+        let counter = 1;
+        counter++;
+        await customer.update({
+          ...customer,
+
+          timeSpentShopping:
+            (customer.timeSpentShopping * (counter / (counter + 1)) +
+              timeSpentShopping * (counter + 1)) /
+            (counter + 1),
+          timeSpentAtQueue:
+            (customer.timeSpentAtQueue * (counter / (counter + 1)) +
+              timeSpentAtQueue * (counter + 1)) /
+            (counter + 1),
+          timeSpentAtCashier:
+            (customer.timeSpentAtCashier * (counter / (counter + 1)) +
+              timeSpentAtCashier * (counter + 1)) /
+            (counter + 1)
+        });
+        console.log("------------HERE: " + customer.timeSpentShopping);
       }
       console.log(timeSpentShopping);
       // let timeSpentShopping =

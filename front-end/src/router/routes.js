@@ -32,7 +32,7 @@ const routes = [{
   },
   {
     path: "/employee",
-    component: () => import("layouts/DisplayLayout.vue"),
+    component: () => import("layouts/EmployeeLayout.vue"),
     children: [{
       path: "",
       component: () => import("pages/EmployeePage.vue"),

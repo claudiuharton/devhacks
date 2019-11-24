@@ -5,7 +5,14 @@
         <q-tabs v-model="tab" class="bg-red-6 text-white">
           <q-tab name="Tab1" label="Evolutia F2"></q-tab>
         </q-tabs>
-        <GChart type="LineChart" :data="chartData" :options="chartOptions" />
+        <GChart
+          type="LineChart"
+          :width="300"
+          :height="500"
+          class="fullWidth"
+          :data="chartData"
+          :options="chartOptions"
+        />
       </div>
       <div class="col-xs-12 col-sm-6">
         <q-tabs v-model="tab" class="bg-positive text-white">
@@ -27,6 +34,8 @@
   </q-page>
 </template>
 <style>
+.fullWidth {
+}
 </style>
 
 <script>
@@ -35,14 +44,14 @@ export default {
   components: {
     GChart
   },
-  name: "LoginPage",
+  name: "AdminPage",
   data() {
     return {
       chartData: [
         ["Year", "Sales", "Expenses", "Profit"],
         ["2014", 1000, 400, 200],
         ["2015", 1170, 460, 250],
-        ["2016", 660, 1120, 300],
+        ["2016", 660, 1120, 400],
         ["2017", 1030, 540, 350]
       ],
       chartOptions: {
