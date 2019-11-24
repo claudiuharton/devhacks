@@ -13,7 +13,8 @@ app.locals = {
   cashPoints: [],
   employees: [],
   customersAtCashPoints: [],
-  customersInShop: []
+  customersInShop: [],
+  notifications: []
 };
 
 const configure = async app => {
@@ -41,12 +42,15 @@ server.on("request", app);
 
 wss.on("connection", ws => {
   ws.on("message", async function incoming(message) {
+    if (message) {
+    }
     ws.send(
       JSON.stringify({
         employees: app.locals.employees,
         cashPoints: app.locals.cashPoints,
         customersInShop: app.locals.customersInShop,
-        customersAtCashPoints: app.locals.customersAtCashPoints
+        customersAtCashPoints: app.locals.customersAtCashPoints,
+        notification: app.locals.notifications
       })
     );
   });
