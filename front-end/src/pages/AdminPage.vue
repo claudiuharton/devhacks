@@ -31,12 +31,83 @@
         </div>
       </div>
     </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 q-px-xl q-py-xl text-center">
+        <q-btn class="q-px-xl q-py-lg bg-red-9 text-white" v-on:click="1" label="Casa 1" />
+      </div>
+      <div class="col-xs-12 col-sm-6 q-px-xl q-py-xl text-center">
+        <q-btn class="q-px-xl q-py-lg bg-red-9 text-white" v-on:click="1" label="Casa 2" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 q-px-sm q-py-xl text-center">
+        <q-btn class="q-px-xl q-py-lg bg-red-9 text-white" v-on:click="1" label="Casa 3" />
+      </div>
+      <div class="col-xs-12 col-sm-6 q-px-sm q-py-xl text-center">
+        <q-btn class="q-px-xl q-py-lg bg-red-9 text-white" v-on:click="1" label="Casa 4" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 q-px-xl q-py-xl text-center">
+        <q-btn class="q-px-xl q-py-lg bg-red-9 text-white" v-on:click="1" label="Casa 5" />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-4 q-px-xl q-py-lg">
+        <q-btn
+          class="q-px-xl q-py-lg bg-red-9 text-white"
+          v-on:click="1"
+          label="Clasa 3 de asteptare(>5 minute timp de asteptare): 5 persoane"
+        />
+      </div>
+      <div class="col-xs-12 col-sm-4 q-px-xl q-py-lg">
+        <q-btn
+          class="q-px-xl q-py-lg bg-orange-6 text-white"
+          v-on:click="1"
+          label="Clasa 2 de asteptare(2-5 minute timp de asteptare): 3 persoane"
+        />
+      </div>
+      <div class="col-xs-12 col-sm-4 q-px-xl q-py-lg">
+        <q-btn
+          class="q-px-xl q-py-lg bg-green-5 text-white"
+          v-on:click="1"
+          label="Clasa 1 de asteptare(0-2 minute timp de asteptare): 2 persoane"
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 q-px-xl q-py-lg text-center">
+        <q-btn
+          class="q-px-xl q-py-lg bg-yellow text-white"
+          v-on:click="1"
+          label="Retrimitere notificare"
+        />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-6 q-px-xl q-py-md text-center">
+        <q-btn
+          class="q-px-xl q-py-lg bg-red-9 text-white"
+          v-on:click="1"
+          label="Inchide casa noua acum"
+        />
+      </div>
+      <div class="col-xs-12 col-sm-6 q-px-xl q-py-md text-center">
+        <q-btn
+          class="q-px-xl q-py-lg bg-green-5 text-white"
+          v-on:click="1"
+          label="Deschide casa noua acum"
+        />
+      </div>
+    </div>
   </q-page>
 </template>
 <style>
-.fullWidth {
-}
 </style>
+
+
 
 <script>
 import { GChart } from "vue-google-charts";
@@ -96,25 +167,25 @@ export default {
         },
         {
           name: "Tuca Madalin",
-          status: 1,
+          status: "Prezent la casa",
           cashPointNumber: 25,
           CreatedAt: "11:50"
         },
         {
           name: "Claudiu Harton",
-          status: 2,
+          status: "Pe drum",
           cashPointNumber: 30,
           CreatedAt: "18:20"
         },
         {
           name: "Timpa George",
-          status: 0,
+          status: "Casă neasumată",
           cashPointNumber: 5,
           CreatedAt: "8:20"
         },
         {
           name: "Lazea Stefan",
-          status: 1,
+          status: "Pe drum",
           cashPointNumber: 11,
           CreatedAt: "22:20"
         }
