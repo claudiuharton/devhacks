@@ -6,7 +6,7 @@
       >In aproximately {{randomMinutes}} minutes you have to open cashier #{{randomCashier}}</h4>
     </div>
 
-    <q-btn push round icon="check" class="bg-green text-grey-1" size="30px"></q-btn>
+    <q-btn push round icon="check" class="bg-green text-grey-1" size="30px" v-on:click="1"></q-btn>
     <!-- <q-btn
       align="around"
       class="btn-fixed-width"
