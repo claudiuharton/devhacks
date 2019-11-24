@@ -75,8 +75,7 @@ const controller = {
         });
         console.log("Updated customer info");
       } else {
-        let counter = 1;
-        counter++;
+        let counter = customer.counter;
         await customer.update({
           ...customer,
 
@@ -91,7 +90,8 @@ const controller = {
           timeSpentAtCashier:
             (customer.timeSpentAtCashier * (counter / (counter + 1)) +
               timeSpentAtCashier * (counter + 1)) /
-            (counter + 1)
+            (counter + 1),
+          counter: counter++
         });
         console.log("------------HERE: " + customer.timeSpentShopping);
       }
