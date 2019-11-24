@@ -69,6 +69,24 @@ const controller = {
         }
       }
 
+      let openCashPoints = req.app.locals.cashPoints.reduce((acc, curr) => {
+        if (curr.status) return acc + 1;
+        else acc;
+      }, 0);
+
+      const notifications = [];
+      req.app.locals.customersInShop.map(item => {
+        if (item.counter > openCashPoints)
+          notifications.push({
+            id: Math.random(),
+            time: item.arrivedAtCheckAprox,
+            necesity: item.counter - openCashPoints
+          });
+        openCashPoints + (item.counter - openCashPoints);
+      });
+
+      req.app.locals.notifications.push(...notifications);
+
       //   req.app.locals.customersInShop;
 
       res.status(201).send({ message: "Customer arrived" });
@@ -161,6 +179,15 @@ const controller = {
         indexOfCustomer,
         1
       );
+
+      if (
+        req.app.locals.cashPoints[indexOfTargetedCashPoint].customers.length ===
+        0
+      ) {
+        req.app.locals.cashPoints[
+          indexOfTargetedCashPoint
+        ].lastDeparture = currentDate;
+      }
 
       const customer = await Customer.findOne({
         where: { id: req.body.id }
