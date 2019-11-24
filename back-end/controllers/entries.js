@@ -8,7 +8,10 @@ const controller = {
         raw: true
       });
 
-      await Entry.create({ arrivedAt: new Date(), customerId: customer.id });
+      const entry = await Entry.create({
+        arrivedAt: new Date(),
+        customerId: customer.id
+      });
 
       res.status(201).send({ message: "Customer arrived" });
     } catch (e) {

@@ -4,7 +4,7 @@ const Employee = db.import("./employee.js");
 const Customer = db.import("./customer.js");
 const Entry = db.import("./entries.js");
 const Average = db.import("./average.js");
-const Paycheck = db.import("./paycheck.js");
+const Cashpoint = db.import("./cashpoint.js");
 
 Customer.hasMany(Entry, { onDelete: "cascade" });
 
@@ -13,6 +13,6 @@ module.exports = {
   Customer,
   Entry,
   Average,
-  Paycheck,
+  Cashpoint,
   db
 };

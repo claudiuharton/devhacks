@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  return sequelize.define("paycheck", {
+  return sequelize.define("cashpoint", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-    paycheckNumber: DataTypes.INTEGER
+    total: DataTypes.INTEGER
   });
 };
