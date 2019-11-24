@@ -1,6 +1,7 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const router = require("./routes");
+const { Employee } = require("./models");
 const cors = require("cors");
 let port = 8080;
 
@@ -29,12 +30,12 @@ let wss = new WSServer({
 server.on("request", app);
 
 wss.on("connection", function connection(ws) {
-  ws.on("message", function incoming(message) {
-    console.log(`received: ${message}`);
+  ws.on("message", async function incoming(message) {
+    const employees = await Employee.findAll({ raw: true });
 
     ws.send(
       JSON.stringify({
-        answer: 42
+        answer: employees
       })
     );
   });
