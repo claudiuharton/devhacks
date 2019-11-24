@@ -1,9 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const router = require("./routes");
-const { Employee } = require("./models");
 const cors = require("cors");
+const websockets = require("./controllers/websockets");
 let port = 8080;
+
+const shop = {
+  cashPoints: [],
+  employee: [],
+  customersAtCashPoints: [],
+  customersInShop: []
+};
 
 const app = express();
 
@@ -29,17 +36,7 @@ let wss = new WSServer({
 // Also mount the app here
 server.on("request", app);
 
-wss.on("connection", function connection(ws) {
-  ws.on("message", async function incoming(message) {
-    const employees = await Employee.findAll({ raw: true });
-
-    ws.send(
-      JSON.stringify({
-        answer: employees
-      })
-    );
-  });
-});
+wss.on("connection", websockets);
 
 server.listen(port, function() {
   console.log(`http/ws server listening on ${port}`);
